@@ -35,7 +35,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── GRID LINES BACKGROUND ─────────────────────────────── */
   body::before {
     content: "";
     position: fixed;
@@ -48,7 +47,6 @@
     z-index: 0;
   }
 
-  /* ── TOP BAR ────────────────────────────────────────────── */
   .topbar {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -91,7 +89,6 @@
     letter-spacing: 0.08em;
   }
 
-  /* ── HERO ───────────────────────────────────────────────── */
   .hero {
     position: relative;
     min-height: 100vh;
@@ -179,7 +176,6 @@
     color: var(--accent);
   }
 
-  /* ── VERTICAL RULE ──────────────────────────────────────── */
   .v-rule {
     position: absolute;
     top: 0; bottom: 0;
@@ -190,7 +186,6 @@
     display: none;
   }
 
-  /* ── SECTION ────────────────────────────────────────────── */
   section {
     position: relative;
     z-index: 1;
@@ -218,7 +213,6 @@
     background: var(--accent-dim);
   }
 
-  /* ── THREE PILLARS ──────────────────────────────────────── */
   .pillars {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -297,7 +291,6 @@
     width: 100%;
   }
 
-  /* ── SCHEMA SECTION ─────────────────────────────────────── */
   .schema-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -346,18 +339,23 @@
     white-space: nowrap;
   }
 
-  .schema-url-text {
+  .schema-url-link {
     padding: 10px 16px;
     font-family: var(--mono-sm);
     font-size: 12px;
-    color: rgba(245,243,239,0.5);
+    color: rgba(245,243,239,0.65);
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
 
-  /* ── CODE BLOCK ─────────────────────────────────────────── */
+  .schema-url-link:hover {
+    color: var(--accent);
+  }
+
   .code-wrap {
     position: relative;
   }
@@ -422,7 +420,6 @@
   .json-null   { color: var(--dim); }
   .json-punct  { color: rgba(245,243,239,0.3); }
 
-  /* ── FIELD TABLE ────────────────────────────────────────── */
   .field-table {
     width: 100%;
     border-collapse: collapse;
@@ -492,7 +489,6 @@
     line-height: 1.6;
   }
 
-  /* ── CONFORMANCE ────────────────────────────────────────── */
   .tc-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -531,7 +527,6 @@
     color: var(--green);
   }
 
-  /* ── VALIDATION SNIPPET ─────────────────────────────────── */
   .validation-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -559,7 +554,6 @@
     margin-bottom: 28px;
   }
 
-  /* ── FOOTER ─────────────────────────────────────────────── */
   footer {
     position: relative;
     z-index: 1;
@@ -641,7 +635,6 @@
     text-transform: uppercase;
   }
 
-  /* ── ANIMATIONS ─────────────────────────────────────────── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -657,7 +650,6 @@
     50%       { opacity: 0.3; }
   }
 
-  /* ── SCROLL REVEAL ──────────────────────────────────────── */
   .reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -669,7 +661,6 @@
     transform: translateY(0);
   }
 
-  /* ── RESPONSIVE ─────────────────────────────────────────── */
   @media (max-width: 900px) {
     .hero { padding: 120px 32px 64px; }
     section { padding: 64px 32px; }
@@ -684,7 +675,6 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-left">
     <div class="topbar-dot"></div>
@@ -693,7 +683,6 @@
   <div class="topbar-right">UPA-1.2-RELEASE</div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-overline">Open Community Specification · June 2026</div>
   <h1 class="hero-title">UPA Schema <em>Registry</em></h1>
@@ -710,7 +699,6 @@
   </div>
 </div>
 
-<!-- THREE PILLARS -->
 <section style="padding-top: 0; padding-bottom: 0; border-top: 1px solid var(--rule);">
   <div class="pillars">
     <div class="pillar reveal">
@@ -737,7 +725,6 @@
   </div>
 </section>
 
-<!-- SCHEMA SECTION -->
 <section>
   <div class="section-label">Hosted Schema</div>
   <div class="schema-section reveal">
@@ -756,7 +743,7 @@
       </p>
       <div class="schema-url-block">
         <div class="schema-url-label">GET</div>
-        <div class="schema-url-text">schemas.upa-standard.org/v1/lightweight-whitelist.json</div>
+        <a class="schema-url-link" href="https://github.com/rjohnn1/UPA-STANDARD/blob/main/v1/lightweight-whitelist.json" target="_blank" rel="noopener noreferrer">github.com/rjohnn1/UPA-STANDARD/v1/lightweight-whitelist.json</a>
       </div>
     </div>
 
@@ -771,7 +758,7 @@
         <span class="code-lang">JSON</span>
       </div>
       <pre><code><span class="json-punct">{</span>
-  <span class="json-key">"$schema"</span><span class="json-punct">:</span> <span class="json-str">"https://schemas.upa-standard.org/v1/lightweight-whitelist.json"</span><span class="json-punct">,</span>
+  <span class="json-key">"$schema"</span><span class="json-punct">:</span> <span class="json-str">"https://raw.githubusercontent.com/rjohnn1/UPA-STANDARD/main/v1/lightweight-whitelist.json"</span><span class="json-punct">,</span>
   <span class="json-key">"whitelist_version"</span><span class="json-punct">:</span> <span class="json-str">"1.0.0"</span><span class="json-punct">,</span>
   <span class="json-key">"mandate_currency"</span><span class="json-punct">:</span> <span class="json-str">"USD"</span><span class="json-punct">,</span>
   <span class="json-key">"last_authorized_by"</span><span class="json-punct">:</span> <span class="json-str">"CFO-Principal"</span><span class="json-punct">,</span>
@@ -791,7 +778,6 @@
     </div>
   </div>
 
-  <!-- FIELD TABLE -->
   <table class="field-table reveal" style="margin-top: 64px;">
     <thead>
       <tr>
@@ -860,7 +846,6 @@
   </table>
 </section>
 
-<!-- VALIDATION SECTION -->
 <section style="background: var(--mid);">
   <div class="section-label">Validate</div>
   <div class="validation-section">
@@ -888,17 +873,16 @@
       </div>
       <pre><code><span class="json-key">import</span> <span style="color:var(--paper)">json, jsonschema, urllib.request</span>
 
-<span class="json-key"># Fetch the live schema</span>
-<span style="color:var(--paper)">url</span> <span style="color:var(--dim)">=</span> <span class="json-str">"https://schemas.upa-standard.org"</span>
-<span style="color:var(--paper)">url</span> <span style="color:var(--dim)">+=</span> <span class="json-str">"/v1/lightweight-whitelist.json"</span>
+<span class="json-key"># Fetch the live raw schema from the production branch</span>
+<span style="color:var(--paper)">url</span> <span style="color:var(--dim)">=</span> <span class="json-str">"https://raw.githubusercontent.com/rjohnn1/UPA-STANDARD/main/v1/lightweight-whitelist.json"</span>
 <span style="color:var(--paper)">schema</span> <span style="color:var(--dim)">=</span> <span style="color:var(--paper)">json.loads(
   urllib.request.urlopen(url).read()
 )</span>
 
-<span class="json-key"># Load your whitelist</span>
+<span class="json-key"># Load your local whitelist configuration</span>
 <span style="color:var(--paper)">whitelist</span> <span style="color:var(--dim)">=</span> <span style="color:var(--paper)">json.load(open(<span class="json-str">"whitelist.json"</span>))</span>
 
-<span class="json-key"># Validate — raises on error</span>
+<span class="json-key"># Validate — raises ValidationError on non-compliance</span>
 <span style="color:var(--paper)">jsonschema.validate(
   instance<span style="color:var(--dim)">=</span>whitelist,
   schema<span style="color:var(--dim)">=</span>schema
@@ -909,12 +893,11 @@
   </div>
 </section>
 
-<!-- CONFORMANCE -->
 <section>
   <div class="section-label">Conformance Suite</div>
   <p class="reveal" style="font-size:14px; color:var(--dim); max-width:560px; margin-bottom:40px; line-height:1.8;">
     A platform claims UPA-1.2 Conformance only after passing TC-001 through TC-007.
-    Full test definitions at the reference repository.
+    Full test definitions and evaluation logs are cataloged at the reference directory.
   </p>
   <div class="tc-grid reveal">
     <div class="tc-card">
@@ -955,7 +938,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-rule" style="grid-column: 1 / -1; margin-bottom: 0;"></div>
   <div class="footer-left">
@@ -968,9 +950,9 @@
     </div>
   </div>
   <div class="footer-links">
-    <a class="footer-link" href="https://github.com/upa-standard/reference">Reference Implementation</a>
-    <a class="footer-link" href="https://schemas.upa-standard.org/v1/lightweight-whitelist.json">Whitelist Schema v1</a>
-    <a class="footer-link" href="https://github.com/upa-standard/reference/blob/main/conformance/TC-001-through-TC-007.md">Conformance Tests</a>
+    <a class="footer-link" href="https://github.com/rjohnn1/UPA-STANDARD/tree/main/reference" target="_blank" rel="noopener noreferrer">Reference Implementation</a>
+    <a class="footer-link" href="https://github.com/rjohnn1/UPA-STANDARD/blob/main/v1/lightweight-whitelist.json" target="_blank" rel="noopener noreferrer">Whitelist Schema v1</a>
+    <a class="footer-link" href="https://github.com/rjohnn1/UPA-STANDARD/blob/main/reference/conformance/TC-001-through-TC-007.md" target="_blank" rel="noopener noreferrer">Conformance Tests</a>
   </div>
   <div class="footer-copy">
     <span>Open Community Specification · MIT Licensed</span>
@@ -979,7 +961,6 @@
 </footer>
 
 <script>
-// Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
