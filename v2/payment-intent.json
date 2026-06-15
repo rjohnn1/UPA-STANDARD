@@ -1,5 +1,118 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "UPACanonicalPaymentIntentV2",
-  "type": "object"
+  "$id": "https://schemas.upa-standard.org/v2/payment-intent.json",
+  "title": "UPACanonicalPaymentIntent",
+  "description": "The exact transaction data contract enforced by the Agentic Payment Control Layer across Phase 5 of the agent lifecycle.",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "principal_id",
+    "intent_id",
+    "payee",
+    "amount",
+    "purpose",
+    "authority_token",
+    "idempotency_key",
+    "timestamp"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "pattern": "^upa_[a-f0-9]{32}$",
+      "description": "Unique cryptographic instance identifier assigned during KYA identity registration."
+    },
+    "principal_id": {
+      "type": "string",
+      "description": "OIDC subject identifier or bank-issued root token referencing the authorizing human or enterprise."
+    },
+    "intent_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Deterministic transaction cycle execution token tracking this specific intent."
+    },
+    "payee": {
+      "type": "object",
+      "required": ["legal_name", "routing_identifier"],
+      "properties": {
+        "legal_name": {
+          "type": "string",
+          "description": "Full registered name of the target merchant or vendor cross-checked against ERP whitelists."
+        },
+        "legal_entity_identifier": {
+          "type": "string",
+          "pattern": "^[0-9A-Z]{20}$",
+          "description": "ISO 17442 LEI token string required for automated institutional clearing rails."
+        },
+        "routing_identifier": {
+          "type": "string",
+          "description": "Target banking routing data network string (SWIFT BIC, local ABA Routing Transit Number, or Virtual Payment Address)."
+        }
+      }
+    },
+    "amount": {
+      "type": "object",
+      "required": ["value", "currency"],
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0.01,
+          "description": "Explicit numeric cost parameter parsed by the Fiduciary Translation Engine."
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 currency denominator code."
+        }
+      }
+    },
+    "purpose": {
+      "type": "string",
+      "pattern": "^[A-Z]{4}$",
+      "description": "Standardized ISO 20022 ExternalPurpose1Code values parsed dynamically from unstructured context strings."
+    },
+    "authority_token": {
+      "type": "string",
+      "description": "Cryptographically signed JWT matching the Section 3.7 Capability Token Profile."
+    },
+    "risk_profile": {
+      "type": "object",
+      "required": ["velocity_limit_tier", "reg_e_controls_profile"],
+      "properties": {
+        "velocity_limit_tier": {
+          "type": "string",
+          "enum": ["TIER_LOW", "TIER_MID", "TIER_UNRESTRICTED"]
+        },
+        "reg_e_controls_profile": {
+          "type": "string",
+          "enum": ["consumer_guardrail_enforced", "enterprise_exempt"]
+        }
+      }
+    },
+    "rail_preference": {
+      "type": "string",
+      "enum": ["RTGS", "ACH", "CARD_TOKEN", "STABLECOIN", "UPI"]
+    },
+    "consent_evidence": {
+      "type": "object",
+      "properties": {
+        "w3c_spc_cryptogram": {
+          "type": "string",
+          "description": "WebAuthn assertion token from user presence validation, cryptographically binding amount and payee variables."
+        },
+        "enclave_attestation_signature": {
+          "type": "string",
+          "description": "Hardware measurement signature confirming the runtime has not undergone memory tampering."
+        }
+      }
+    },
+    "idempotency_key": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique key token used to prevent double-spend race conditions over network drops."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
 }

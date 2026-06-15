@@ -1,5 +1,48 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.upa-standard.org/v1/lightweight-whitelist.json",
   "title": "UPALightweightWhitelistV1",
-  "type": "object"
+  "description": "Historical UPA-1.2 lightweight vendor whitelist matching configuration schema contract for enterprise legacy bridges.",
+  "type": "object",
+  "required": [
+    "whitelist_version",
+    "mandate_currency",
+    "last_authorized_by",
+    "approved_counterparties"
+  ],
+  "properties": {
+    "whitelist_version": {
+      "type": "string",
+      "pattern": "^1\\.[0-2]\\.[0-9]+$"
+    },
+    "mandate_currency": {
+      "type": "string",
+      "enum": ["USD", "EUR", "GBP", "INR", "SGD"]
+    },
+    "last_authorized_by": {
+      "type": "string"
+    },
+    "approved_counterparties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "legal_name",
+          "routing_bic",
+          "max_single_transaction_limit"
+        ],
+        "properties": {
+          "legal_name": { "type": "string" },
+          "routing_bic": {
+            "type": "string",
+            "pattern": "^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$"
+          },
+          "max_single_transaction_limit": {
+            "type": "number",
+            "minimum": 0.01
+          }
+        }
+      }
+    }
+  }
 }

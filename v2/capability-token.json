@@ -1,5 +1,54 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "UPACapabilityTokenProfileV2",
-  "type": "object"
+  "$id": "https://schemas.upa-standard.org/v2/capability-token.json",
+  "title": "UPACapabilityTokenProfile",
+  "description": "Un-encrypted internal JSON metadata configuration payload contained within an authorized UPA capability JWT token.",
+  "type": "object",
+  "required": [
+    "can_pay",
+    "max_single_amount",
+    "currency_whitelist",
+    "expires_timestamp"
+  ],
+  "properties": {
+    "can_pay": {
+      "type": "boolean",
+      "default": true,
+      "description": "Global execution bit status. Toggling to false invalidates all child agent outilined tool calls instantly."
+    },
+    "max_single_amount": {
+      "type": "number",
+      "minimum": 0.01,
+      "description": "Absolute numeric transaction cap enforced natively by the inline SQL/Lua database locks."
+    },
+    "currency_whitelist": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{3}$"
+      },
+      "description": "Explicit whitelist of accepted transaction ISO currency codes."
+    },
+    "counterparty_whitelist_identifiers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of valid ERP supplier strings or merchant wallet strings allowed for transaction processing."
+    },
+    "expires_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Hard chronological limits window. Past this timestamp, validation keys fail open-secure."
+    },
+    "contextual_purpose_restrictions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{4}$"
+      },
+      "description": "Whitelisted ISO 20022 operational intent categories (e.g. COMP for cloud computing infrastructure, TRAD for commerce goods)."
+    }
+  }
 }

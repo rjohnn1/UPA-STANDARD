@@ -1,5 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.upa-standard.org/v1/secure-settlement.json",
   "title": "UPASecureSettlementV1",
-  "type": "object"
+  "description": "Historical UPA-1.2 database configuration and clearing instruction structure payload.",
+  "type": "object",
+  "required": [
+    "settlement_id",
+    "source_account_identifier",
+    "transaction_matrix"
+  ],
+  "properties": {
+    "settlement_id": { "type": "string", "format": "uuid" },
+    "source_account_identifier": { "type": "string" },
+    "transaction_matrix": {
+      "type": "object",
+      "required": ["value_amount", "iso_purpose_code"],
+      "properties": {
+        "value_amount": { "type": "number", "minimum": 0.01 },
+        "iso_purpose_code": { "type": "string", "maxLength": 4 }
+      }
+    }
+  }
 }
